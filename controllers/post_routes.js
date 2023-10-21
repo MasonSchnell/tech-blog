@@ -32,10 +32,12 @@ router.post("/post", isAuthenticated, authenticate, async (req, res) => {
 
         await req.user.addPost(post);
 
+        req.session.title = post.title;
+
         res.redirect("/");
     } catch (error) {
         req.session.errors = error.errors.map((errObj) => errObj.message);
-        res.redirect("/post");
+        res.render("post_form", { errors: req.session.errors });
     }
 });
 

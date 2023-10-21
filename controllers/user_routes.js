@@ -20,6 +20,21 @@ router.post("/register", async (req, res) => {
     }
 });
 
+// router.post("/dashboard", async (req, res) => {
+//     console.log("here");
+//     let userPosts;
+//     try {
+//         const user = await User.findByPk(1, {
+//             include: [{ model: Post, as: "posts" }],
+//         });
+//         userPosts = user.posts;
+//     } catch (error) {
+//         console.log("An error occurred:", error);
+//     }
+
+//     res.render("dashboard", { userPosts });
+// });
+
 router.post("/login", async (req, res) => {
     const user = await User.findOne({
         where: {
