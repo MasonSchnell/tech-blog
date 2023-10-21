@@ -51,6 +51,30 @@ router.get("/", authenticate, async (req, res) => {
     });
 });
 
+router.get("/postView/:id", authenticate, async (req, res) => {
+    const postId = req.params.id;
+
+    const post = await Post.findByPk(postId);
+    const user = await User.findByPk(post.dataValues.author_id);
+    console.log("postId", post);
+    console.log("userId", user);
+
+    const createdAt = post.dataValues.createdAt;
+
+    const formattedDate = createdAt.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
+    post.dataValues.createdAt = formattedDate;
+
+    res.render("postView", { post, user });
+
+    req.session.errors = [];
+});
+
 // GET route to show the register form
 router.get("/register", isLoggedIn, authenticate, (req, res) => {
     // Render the register form template
@@ -65,6 +89,7 @@ router.get("/register", isLoggedIn, authenticate, (req, res) => {
 router.get("/dashboard", isAuthenticated, authenticate, async (req, res) => {
     // Render the register form template
     let userPosts;
+    let postDate;
     let user;
     try {
         const loggedInUserId = req.user.id;
@@ -77,11 +102,30 @@ router.get("/dashboard", isAuthenticated, authenticate, async (req, res) => {
             ],
         });
         userPosts = user.posts;
+        userPosts.reverse();
+
+        formattedDates = [];
+        userPosts.forEach((post) => {
+            const createdAt = post.dataValues.createdAt;
+
+            const formattedDate = createdAt.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+            });
+            post.dataValues.createdAt = formattedDate;
+        });
+
+        postDate = user.posts.date;
+        console.log("date", postDate);
+        console.log(userPosts[0]);
     } catch (error) {
         console.log("An error occurred:", error);
     }
 
-    res.render("dashboard", { userPosts, user });
+    res.render("dashboard", { userPosts, user, formattedDates });
 
     req.session.errors = [];
 });

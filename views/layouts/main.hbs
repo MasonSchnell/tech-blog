@@ -14,7 +14,9 @@
                     <h3>Tech Blog</h3>
                 </a>
                 <a href="/">Home</a>
-                <a href="/dashboard" style="text-align: left">Dashboard</a>
+                {{#if user}}
+                    <a href="/dashboard" style="text-align: left">Dashboard</a>
+                {{/if}}
             </div>
             <nav class="row align-center">
                 {{#if user}}

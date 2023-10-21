@@ -1,0 +1,17 @@
+<h1 class="text-center">The MotherMessageBoard</h1>
+
+<section class="column align-center post-output">
+    <div class="post">
+        <h1 class="text-center title">{{post.dataValues.title}}</h1>
+        <h3 class="text-center">{{post.dataValues.text}}</h3>
+        <div class="row justify-between">
+            <p>{{post.dataValues.createdAt}}</p>
+            <p>By: {{user.dataValues.email}}</p>
+        </div>
+
+    </div>
+    <div>
+        <input type="text" placeholder="Comment" />
+        <button>Submit</button>
+    </div>
+</section>
