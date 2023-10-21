@@ -2,7 +2,7 @@
 <section class="column align-center post-output">
     {{#each userPosts}}
         <div class="post">
-            <h1 class="text-center">{{dataValues.title}}</h1>
+            <h1 class="text-center title">{{dataValues.title}}</h1>
             <h3 class="text-center">{{dataValues.text}}</h3>
             <div class="row justify-between">
                 <p>{{dataValues.createdAt}}</p>
@@ -10,4 +10,5 @@
             </div>
         </div>
     {{/each}}
+    <a href="/post" class="new-post-button">New Post</a>
 </section>

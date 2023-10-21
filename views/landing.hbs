@@ -2,8 +2,11 @@
 
 <section class="column align-center post-output">
     {{#each posts}}
+
         <div class="post">
-            <h1 class="text-center">{{title}}</h1>
+            <a href="/postView/{{id}}">
+                <h1 class="text-center title">{{title}}</h1>
+            </a>
             <h3 class="text-center">{{text}}</h3>
             <div class="row justify-between">
                 <p>{{date}}</p>
