@@ -1,0 +1,13 @@
+<h1 class="text-center">The MotherMessageBoard</h1>
+<section class="column align-center post-output">
+    {{#each userPosts}}
+        <div class="post">
+            <h1 class="text-center">{{dataValues.title}}</h1>
+            <h3 class="text-center">{{dataValues.text}}</h3>
+            <div class="row justify-between">
+                <p>{{dataValues.createdAt}}</p>
+                <p>By: {{../user.dataValues.email}}</p>
+            </div>
+        </div>
+    {{/each}}
+</section>

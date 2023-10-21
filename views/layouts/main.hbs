@@ -9,10 +9,13 @@
 
     <body>
         <header class="row justify-between align-center">
-            <a href="/">
-                <h3>Tech Blog</h3>
-            </a>
-
+            <div class="row">
+                <a href="/">
+                    <h3>Tech Blog</h3>
+                </a>
+                <a href="/">Home</a>
+                <a href="/dashboard" style="text-align: left">Dashboard</a>
+            </div>
             <nav class="row align-center">
                 {{#if user}}
                     <p>Welcome, {{user.email}}</p>

@@ -22,6 +22,11 @@ a:hover {
     display: flex;
 }
 
+header a {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
 .column {
     flex-direction: column;
 }
@@ -69,18 +74,21 @@ form > * {
     margin: 5px 0;
 }
 
-.coo-output {
+.post-output {
     margin-top: 30px;
 }
 
-.coo {
+.post {
+    margin-bottom: 15px;
+    background-color: rgb(225, 217, 187);
+    border-radius: 2px;
+    border: 2px solid black;
+}
+
+.post h3 {
     margin-bottom: 15px;
 }
 
-.coo h3 {
-    margin-bottom: 15px;
-}
-
-.coo p:first-child {
+.post p:first-child {
     margin-right: 25px;
 }

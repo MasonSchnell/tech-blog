@@ -7,6 +7,15 @@ class Post extends Model {}
 
 Post.init(
     {
+        title: {
+            type: DataTypes.STRING,
+            validate: {
+                len: {
+                    args: 3,
+                    msg: "Your title must be at least 3 characters in length.",
+                },
+            },
+        },
         text: {
             type: DataTypes.STRING,
             validate: {

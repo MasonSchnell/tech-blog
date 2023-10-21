@@ -62,6 +62,30 @@ router.get("/register", isLoggedIn, authenticate, (req, res) => {
     req.session.errors = [];
 });
 
+router.get("/dashboard", isAuthenticated, authenticate, async (req, res) => {
+    // Render the register form template
+    let userPosts;
+    let user;
+    try {
+        const loggedInUserId = req.user.id;
+        user = await User.findByPk(loggedInUserId, {
+            include: [
+                {
+                    model: Post,
+                    as: "posts",
+                },
+            ],
+        });
+        userPosts = user.posts;
+    } catch (error) {
+        console.log("An error occurred:", error);
+    }
+
+    res.render("dashboard", { userPosts, user });
+
+    req.session.errors = [];
+});
+
 // GET route to show the login form
 router.get("/login", isLoggedIn, authenticate, (req, res) => {
     // Render the register form template
