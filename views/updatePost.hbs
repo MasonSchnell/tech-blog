@@ -1,0 +1,33 @@
+<h1 class="text-center">The MotherMessageBoard</h1>
+<section class="column align-center post-output">
+
+    <div class="post">
+        <h1 class="text-center title">{{post.dataValues.title}}</h1>
+        <h3 class="text-center">{{post.dataValues.text}}</h3>
+
+        <form action="">
+            <h3>Updated Title</h3>
+            <div class="row justify-between">
+
+                <textarea
+                    id="comments"
+                    name="comments"
+                    rows="4"
+                    cols="50"
+                >{{post.dataValues.title}}</textarea>
+            </div>
+            <h3>Updated Text</h3>
+            <div class="row justify-between">
+                <textarea
+                    id="comments"
+                    name="comments"
+                    rows="4"
+                    cols="50"
+                >{{post.dataValues.text}}</textarea>
+            </div>
+
+            <button>Submit</button>
+
+        </form>
+    </div>
+</section>

@@ -17,6 +17,11 @@ a:hover {
     text-decoration: underline;
 }
 
+.deleteButton {
+    background-color: red;
+    color: black;
+}
+
 .row,
 .column {
     display: flex;
@@ -35,6 +40,7 @@ header a {
     border-bottom: 1px solid #ccc;
     padding: 5px;
     overflow-wrap: break-word;
+    height: 150px;
 }
 
 .justify-between {
