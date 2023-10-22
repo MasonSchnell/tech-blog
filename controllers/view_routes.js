@@ -70,31 +70,28 @@ router.get("/postView/:id", authenticate, async (req, res) => {
         comment.forEach(async function (commentItem) {
             const commentCreatedAt = commentItem.dataValues.createdAt;
             commentItem.dataValues.createdAt = formatDate(commentCreatedAt);
-            console.log("COMMENnnnnnnT:", commentItem);
             commentUser = await User.findByPk(commentItem.dataValues.user_id);
-            console.log(commentUser);
             commentItem.dataValues.user_id = commentUser.dataValues.email;
-            console.log("COMENTITEM", commentItem);
             await commentItem.save();
         });
     }
 
-    // console.log("postId", post);
-    // console.log("userId", user);
-
     const createdAt = post.dataValues.createdAt;
-
-    // const formattedDate = createdAt.toLocaleDateString("en-US", {
-    //     year: "numeric",
-    //     month: "numeric",
-    //     day: "numeric",
-    //     hour: "numeric",
-    //     minute: "numeric",
-    // });
 
     post.dataValues.createdAt = formatDate(createdAt);
 
-    res.render("postView", { post, user, comment, commentUser });
+    res.render("postView", { post, user, comment });
+
+    req.session.errors = [];
+});
+
+router.get("/updatePost/:id", authenticate, async (req, res) => {
+    const postId = req.params.id;
+    console.log("POST", postId);
+    const post = await Post.findByPk(postId);
+    console.log("POSTsss", post);
+
+    res.render("updatePost", { post });
 
     req.session.errors = [];
 });
@@ -155,7 +152,7 @@ router.get("/dashboard", isAuthenticated, authenticate, async (req, res) => {
 
         postDate = user.posts.date;
         console.log("date", postDate);
-        console.log(userPosts[0]);
+        console.log(userPosts);
     } catch (error) {
         console.log("An error occurred:", error);
     }

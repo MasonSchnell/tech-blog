@@ -86,6 +86,26 @@ router.post(
     }
 );
 
+router.post(
+    "/deletePost/:id",
+    isAuthenticated,
+    authenticate,
+    async (req, res) => {
+        try {
+            const userPostId = req.params.id;
+            const userPost = await Post.findByPk(userPostId);
+            await userPost.destroy();
+            res.render("dashboard");
+        } catch (error) {
+            const validationErrors = error.errors.map(
+                (errObj) => errObj.message
+            );
+            req.session.errors = validationErrors;
+            res.render("post_form", { errors: req.session.errors });
+        }
+    }
+);
+
 // router.post(
 //     "/postView/:id",
 //     isAuthenticated,
@@ -94,7 +114,6 @@ router.post(
 //         try {
 //             const newComment = req.body.comment;
 //             console.log("before:", newComment);
-
 //             const user_post = await Post.findByPk(req.params.id);
 //             console.log("POSTOSOTOTO", user_post);
 //             let comments = user_post.comment || [];
