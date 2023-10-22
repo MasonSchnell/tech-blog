@@ -2,6 +2,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 
 // Block an auth page if user is already logged in
 function isLoggedIn(req, res, next) {
@@ -53,27 +54,61 @@ router.get("/", authenticate, async (req, res) => {
 
 router.get("/postView/:id", authenticate, async (req, res) => {
     const postId = req.params.id;
+    let commentUser;
 
     const post = await Post.findByPk(postId);
     const user = await User.findByPk(post.dataValues.author_id);
-    console.log("postId", post);
-    console.log("userId", user);
+    const comment = await Comment.findAll({
+        where: {
+            post_id: postId,
+        },
+    });
+
+    if (comment.length > 0) {
+        console.log("Comment", comment);
+
+        comment.forEach(async function (commentItem) {
+            const commentCreatedAt = commentItem.dataValues.createdAt;
+            commentItem.dataValues.createdAt = formatDate(commentCreatedAt);
+            console.log("COMMENnnnnnnT:", commentItem);
+            commentUser = await User.findByPk(commentItem.dataValues.user_id);
+            console.log(commentUser);
+            commentItem.dataValues.user_id = commentUser.dataValues.email;
+            console.log("COMENTITEM", commentItem);
+            await commentItem.save();
+        });
+    }
+
+    // console.log("postId", post);
+    // console.log("userId", user);
 
     const createdAt = post.dataValues.createdAt;
 
-    const formattedDate = createdAt.toLocaleDateString("en-US", {
+    // const formattedDate = createdAt.toLocaleDateString("en-US", {
+    //     year: "numeric",
+    //     month: "numeric",
+    //     day: "numeric",
+    //     hour: "numeric",
+    //     minute: "numeric",
+    // });
+
+    post.dataValues.createdAt = formatDate(createdAt);
+
+    res.render("postView", { post, user, comment, commentUser });
+
+    req.session.errors = [];
+});
+
+function formatDate(date) {
+    const formattedDate = date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "numeric",
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
     });
-    post.dataValues.createdAt = formattedDate;
-
-    res.render("postView", { post, user });
-
-    req.session.errors = [];
-});
+    return formattedDate;
+}
 
 // GET route to show the register form
 router.get("/register", isLoggedIn, authenticate, (req, res) => {

@@ -31,6 +31,12 @@ header a {
     flex-direction: column;
 }
 
+.comment {
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    overflow-wrap: break-word;
+}
+
 .justify-between {
     justify-content: space-between;
 }
@@ -106,4 +112,13 @@ form > * {
 .title {
     background-color: black;
     color: white;
+}
+
+.text-container {
+    border: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    padding: 10px;
+    margin: 10px;
 }
