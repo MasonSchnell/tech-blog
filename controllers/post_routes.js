@@ -35,7 +35,7 @@ router.post("/post", isAuthenticated, authenticate, async (req, res) => {
 
         req.session.title = post.title;
 
-        res.redirect("/");
+        res.redirect("/dashboard");
     } catch (error) {
         req.session.errors = error.errors.map((errObj) => errObj.message);
         res.render("post_form", { errors: req.session.errors });
@@ -43,15 +43,35 @@ router.post("/post", isAuthenticated, authenticate, async (req, res) => {
 });
 
 router.post(
-    "/postView/:id",
+    "/updatePost/:id",
     isAuthenticated,
     authenticate,
     async (req, res) => {
         try {
+            const post = await Post.findByPk(req.params.id);
+
+            post.setDataValue("title", req.body.titleUpdate);
+            post.setDataValue("text", req.body.textUpdate);
+            await post.save();
+
+            res.redirect("/dashboard");
+        } catch (error) {
+            req.session.errors = error.errors.map((errObj) => errObj.message);
+            res.render("updatePost", { errors: req.session.errors });
+        }
+    }
+);
+
+router.post(
+    "/postView/:id",
+    isAuthenticated,
+    authenticate,
+    async (req, res) => {
+        let userPostId;
+        try {
             const userPostId = req.params.id;
 
             const newComment = req.body.comment;
-            console.log(req.body.comment);
 
             const val = {
                 text: newComment,
@@ -61,7 +81,6 @@ router.post(
             // comment.dataValues.user_id = req.session.user_id;
             comment.setDataValue("user_id", req.session.user_id);
             await comment.save();
-            console.log("Comment:", comment);
 
             const userPost = await Post.findByPk(userPostId);
 
@@ -71,17 +90,15 @@ router.post(
                 console.log(error);
             }
 
-            // const comment1 = await Comment.create(req.body.comment);
-            // console.log("hrer");
-            // await req.user_post.addComment(comment);
-            // console.log("here");
             res.redirect(`/postView/${userPostId}`);
         } catch (error) {
             const validationErrors = error.errors.map(
                 (errObj) => errObj.message
             );
             req.session.errors = validationErrors;
-            res.render("post_form", { errors: req.session.errors });
+            res.render(`/postView/${userPostId}`, {
+                errors: req.session.errors,
+            });
         }
     }
 );
@@ -101,33 +118,9 @@ router.post(
                 (errObj) => errObj.message
             );
             req.session.errors = validationErrors;
-            res.render("post_form", { errors: req.session.errors });
+            res.render("dashboard", { errors: req.session.errors });
         }
     }
 );
-
-// router.post(
-//     "/postView/:id",
-//     isAuthenticated,
-//     authenticate,
-//     async (req, res) => {
-//         try {
-//             const newComment = req.body.comment;
-//             console.log("before:", newComment);
-//             const user_post = await Post.findByPk(req.params.id);
-//             console.log("POSTOSOTOTO", user_post);
-//             let comments = user_post.comment || [];
-//             comments.push(newComment);
-//             await user_post.update({ comment: comments });
-//             user_post.save();
-//             console.log("POSTOSOTOTO AFTER", user_post);
-
-//             console.log("after:", newComment);
-//         } catch (error) {
-//             req.session.errors = error.errors.map((errObj) => errObj.message);
-//             res.render("post_form", { errors: req.session.errors });
-//         }
-//     }
-// );
 
 module.exports = router;

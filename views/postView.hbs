@@ -12,13 +12,18 @@
     </div>
     <div class="post">
         <p class="title text-center">Add Comments</p>
-        <form method="post">
-            <input
+        {{#each errors}}
+            <p class="error text-center">{{this}}</p>
+        {{/each}}
+        <form class="input-form" method="post">
+            {{! <input
                 class="comment"
                 type="text"
                 name="comment"
                 placeholder="Comment"
-            />
+            /> }}
+
+            <textarea name="comment" cols="30" rows="10"></textarea>
             <button>Submit</button>
         </form>
     </div>

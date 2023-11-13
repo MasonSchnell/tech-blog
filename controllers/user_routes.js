@@ -3,9 +3,6 @@ const router = require("express").Router();
 // Import the User model
 const User = require("../models/User.js");
 
-// localhost:3333/auth/register
-// Post request route that retrieves the form data(email, password) and creates a new user in the database, using our User model
-// The route will respond with a data object with a property of message that says "User added successfully!"
 router.post("/register", async (req, res) => {
     try {
         const user = await User.create(req.body);
@@ -19,21 +16,6 @@ router.post("/register", async (req, res) => {
         res.redirect("/register");
     }
 });
-
-// router.post("/dashboard", async (req, res) => {
-//     console.log("here");
-//     let userPosts;
-//     try {
-//         const user = await User.findByPk(1, {
-//             include: [{ model: Post, as: "posts" }],
-//         });
-//         userPosts = user.posts;
-//     } catch (error) {
-//         console.log("An error occurred:", error);
-//     }
-
-//     res.render("dashboard", { userPosts });
-// });
 
 router.post("/login", async (req, res) => {
     const user = await User.findOne({
