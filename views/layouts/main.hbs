@@ -11,7 +11,7 @@
         <header class="row justify-between align-center">
             <div class="row">
                 <a href="/">
-                    <h3>Tech Blog</h3>
+                    <h2>Tech Blog</h2>
                 </a>
                 <a href="/">Home</a>
                 {{#if user}}
@@ -20,9 +20,10 @@
             </div>
             <nav class="row align-center">
                 {{#if user}}
-                    <p>Welcome, {{user.email}}</p>
-                    <a href="/post">Post a Blog</a>
-                    <a href="/auth/logout">Log Out</a>
+                    <div class="row">
+                        <a href="/post">Create a Post</a>
+                        <a href="/auth/logout">Log Out</a>
+                    </div>
                 {{else}}
                     <a href="/register">Register</a>
                     <span>or</span>

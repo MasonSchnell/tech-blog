@@ -28,13 +28,35 @@ app.use(express.urlencoded({ extended: false }));
 app.engine(".hbs", engine({ extname: ".hbs" }));
 app.set("view engine", ".hbs");
 
+// Middlewear to log user out after 15 minutes of inactivity
+// ----------------------------------------------------
+const SESSION_TIMEOUT = 15 * 60 * 1000;
+
+function sessionTimeOut(req, res, next) {
+  if (req.session && req.session.user) {
+    req.session.lastActivity = Date.now();
+    if (req.session.lastActivity < Date.now() - SESSION_TIMEOUT) {
+      req.session.destroy((err) => {
+        if (err) {
+          console.log("Error destroying session:", err);
+        }
+      });
+    }
+  }
+  next();
+}
+// ----------------------------------------------------
+
 // Load session middleware
 app.use(
-    session({
-        secret: "some secret key",
-        resave: false,
-        saveUninitialized: true,
-    })
+  session({
+    secret: "some secret key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: SESSION_TIMEOUT,
+    },
+  })
 );
 
 // Load our view routes at the root level '/'
@@ -42,9 +64,11 @@ app.use("/", [view_routes, post_routes]);
 // /auth/register
 app.use("/auth", user_routes);
 
+app.use(sessionTimeOut);
+
 // Sync and create tables
 // { force: false }
 db.sync({ force: true }).then(() => {
-    // Start the server and log the port that it started on
-    app.listen(PORT, () => console.log("Server is running on port", PORT));
+  // Start the server and log the port that it started on
+  app.listen(PORT, () => console.log("Server is running on port", PORT));
 });

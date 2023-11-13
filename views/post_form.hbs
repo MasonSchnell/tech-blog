@@ -1,11 +1,30 @@
-<form action="/post" method="POST">
-    <h1>How are you keeping on?</h1>
+
+<form class="input-form post" action="/post" method="POST">
+    <h1>Create Post</h1>
 
     {{#each errors}}
         <p class="error text-center">{{this}}</p>
     {{/each}}
+  </div>
+    <div class="row justify-between">
 
-    <input type="text" name="title" placeholder="Write your title" />
-    <input type="text" name="text" placeholder="Write your message" />
+                <textarea
+                    id="comments"
+                    name="title"
+                    rows="4"
+                    cols="50"
+                    placeholder="Write your title"
+                ></textarea>
+            </div>
+    <div class="row justify-between">
+
+                <textarea
+                    id="comments"
+                    name="text"
+                    rows="4"
+                    cols="50"
+                    placeholder="Write your text"
+                ></textarea>
+            </div>
     <button>Submit</button>
 </form>

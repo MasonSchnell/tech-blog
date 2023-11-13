@@ -1,4 +1,4 @@
-<h1 class="text-center">The MotherMessageBoard</h1>
+<h1 class="text-center">Dashboard</h1>
 <section class="column align-center post-output">
     {{#each userPosts}}
         <div class="post">
@@ -9,7 +9,7 @@
             <div class="row justify-between">
                 <p>{{dataValues.createdAt}}</p>
                 <form action="/deletePost/{{dataValues.id}}" method="POST">
-                    <button>Delete</button>
+                    <button class="delete-button">Delete</button>
                 </form>
             </div>
         </div>

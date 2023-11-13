@@ -65,8 +65,6 @@ router.get("/postView/:id", authenticate, async (req, res) => {
     });
 
     if (comment.length > 0) {
-        console.log("Comment", comment);
-
         comment.forEach(async function (commentItem) {
             const commentCreatedAt = commentItem.dataValues.createdAt;
             commentItem.dataValues.createdAt = formatDate(commentCreatedAt);
@@ -87,9 +85,8 @@ router.get("/postView/:id", authenticate, async (req, res) => {
 
 router.get("/updatePost/:id", authenticate, async (req, res) => {
     const postId = req.params.id;
-    console.log("POST", postId);
+
     const post = await Post.findByPk(postId);
-    console.log("POSTsss", post);
 
     res.render("updatePost", { post });
 
@@ -151,8 +148,6 @@ router.get("/dashboard", isAuthenticated, authenticate, async (req, res) => {
         });
 
         postDate = user.posts.date;
-        console.log("date", postDate);
-        console.log(userPosts);
     } catch (error) {
         console.log("An error occurred:", error);
     }
