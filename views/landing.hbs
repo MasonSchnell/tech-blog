@@ -1,17 +1,16 @@
 <h1 class="text-center">The MotherBoard</h1>
 
 <section class="column align-center post-output">
-    {{#each posts}}
+  {{#each posts}}
 
-        <div class="post">
-            <a href="/postView/{{id}}">
-                <h1 class="text-center title">{{title}}</h1>
-            </a>
-            {{!-- <h3 class="text-center">{{text}}</h3> --}}
-            <div class="row justify-between">
-                <p>{{date}}</p>
-                {{!-- <p>By: {{author.email}}</p> --}}
-            </div>
-        </div>
-    {{/each}}
+    <div class="post">
+      <a href="/postView/{{id}}">
+        <h1 class="text-center title">{{title}}</h1>
+      </a>
+      <div class="row justify-between">
+        <p>{{date}}</p>
+        <p>By: {{author.email}}</p>
+      </div>
+    </div>
+  {{/each}}
 </section>
