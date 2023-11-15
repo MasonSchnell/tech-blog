@@ -50,7 +50,7 @@ function sessionTimeOut(req, res, next) {
 // Load session middleware
 app.use(
   session({
-    secret: "some secret key",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {

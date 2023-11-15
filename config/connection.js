@@ -2,8 +2,9 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
+const isProd = process.env.PORT;
 // Create a new connection instance, using option 3 from the docs
-const sequelize = new Sequelize(
+const sequelize = isProd ? new Sequelize(process.env.JAWSDB_URL): new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USERNAME,
     process.env.DB_PASSWORD,
