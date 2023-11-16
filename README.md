@@ -1,6 +1,10 @@
 # Tech Blog
 
+![Tech Blog Screenshot](TechBlogScreenshot.png)
+
 This is a basic tech blog application where users can create, edit, comment, and delete blog posts.
+
+[Webstite Link](https://gentle-tundra-76702-7ac35c6f2eb9.herokuapp.com/)
 
 ## Features
 
