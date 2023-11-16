@@ -6,7 +6,7 @@ const User = require("../models/User.js");
 router.post("/register", async (req, res) => {
   try {
     const user = await User.create(req.body);
-    console.log(user);
+
     req.session.user_id = user.id;
 
     res.redirect("/");
